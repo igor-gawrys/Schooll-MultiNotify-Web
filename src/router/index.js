@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Dashboard from '@/components/Dashboard'
 import Login from '@/components/Auth/Login'
+import Grade from '@/components/Grade'
+import Notification from '@/components/Notification'
 
 Vue.use(Router)
 
@@ -23,6 +25,16 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/grade/:grade',
+      name: 'Grade',
+      component: Grade
+    },
+    {
+      path: '/notification/:notifcation',
+      name: 'Notification',
+      component: Notification
     }
   ]
 })

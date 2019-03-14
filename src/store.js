@@ -5,7 +5,9 @@ import Axios from 'axios';
 
 Vue.use(Vuex);
 const state = {
-   user:{}
+   user:{},
+   grades:[],
+   logged:localStorage.getItem('access_token',null) !=null
 }
 const actions = {
     login({commit},credientials){
@@ -15,9 +17,18 @@ const actions = {
           });
     },
     me({commit}){
+        if(state.logged){
         Axios.post('auth/me').then((response)=>{
          state.user = response.data.data;
         });
+        }
+    },
+    grades({commit}){
+        if(state.logged){
+        Axios.get('auth/grades').then((response)=>{
+         state.grades = response.data.data.grades;
+        });
+        }
     },
     logout({commit}){
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('access_token');
