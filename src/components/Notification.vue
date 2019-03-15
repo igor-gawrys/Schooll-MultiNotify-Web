@@ -1,29 +1,25 @@
 <template>
   <div class="hello">
-  <b-modal ref="createGrade" hide-footer title="Dodaj klasę">
-      <div class="d-block text-center">
-       <div>
-        <input type="text" class="form-control" placeholder="Nazwa" v-model="grade.name">
-       </div>
-      </div>
-      <b-button class="mt-3" variant="outline-success" block @click="createGrade()">Utwórz !</b-button>
-  </b-modal>
-    <h1>{{ msg }}</h1>
+    <h1>Powiadomienie</h1>
     <p>Witaj {{ $store.state.user.full_name }} !</p>
-    <div class='row'>
+        <div class='row'>
     <div class='col-md-3'></div>
     <div class='col-md-6'>
     <div class='grades'>
-    <div class='grade' v-for="grade in $store.state.grades" @click="()=>{ $router.push({name:'Grade',params:{grade:grade.id}}) }">
-   {{grade.name}}
+         <div class='grade'>
+ {{notification.content}}
     </div>
-     <div class='grade' @click="()=>{  $refs.createGrade.show() }">
-   Dodaj klasę
+    <div class='grade delete' @click="Delete()">
+      Skasuj
+    </div>
+     <div class='grade' @click="()=>{ $router.back() }">
+   <= wróć
     </div>
     </div>
     </div>
       <div class='col-md-3'></div>
     </div>
+
         <ul>
       <li>
         <a
@@ -39,25 +35,26 @@
 
 <script>
 export default {
-  name: 'Dashboard',
+  name: 'Notification',
   data () {
     return {
-      msg: 'Panel zarządzania !',
-      grade:{
-        name:""
-      }
+      notification:{}
     }
+  },
+  created(){
+     axios.get('auth/notifications/'+this.$route.params.notification).then((response)=>{
+        this.notification = response.data.data;
+     });
   },
   methods:{
     logout(){
        this.$store.dispatch('logout');
     },
-    createGrade(){
-      axios.post('auth/grades',{name:this.grade.name,color:"#fffff"}).then((response)=>{
-          this.grade.name = "";
-          this.$store.dispatch('grades');
-          this.$refs.createGrade.hide();
-      });
+    Delete(){
+        axios.delete("auth/notifications/"+this.notification.id).then((response)=>{
+               alert(response.data.message);
+               this.$router.back();
+        });
     }
   }
 }
@@ -97,7 +94,8 @@ a {
 .grade:last-child {
    margin-bottom:20px;
 }
-.grade:hover{
-  cursor:pointer;
+.delete:hover {
+    background-color:rgb(119, 40, 11,0.5);
+    color:white;
 }
 </style>

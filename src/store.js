@@ -13,7 +13,13 @@ const actions = {
     login({commit},credientials){
         Axios.post('auth/login',credientials).then((response)=>{
             localStorage.setItem("access_token",response.data.data.access_token);
-             router.push({name:"Dashboard",params:{}});
+            Axios.post('auth/me').then((response)=>{
+                state.user = response.data.data;
+                Axios.get('auth/grades').then((response)=>{
+                   state.grades = response.data.data.grades;
+                });
+            });
+            router.push({name:"Dashboard",params:{}});
           });
     },
     me({commit}){

@@ -13,6 +13,7 @@ axios.defaults.baseURL = "http://localhost:8080/api";
 if(localStorage.getItem("access_token",null) !=null){
   axios.defaults.headers.common['Authorization'] = localStorage.getItem('access_token');
 }
+Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
