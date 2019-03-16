@@ -8,6 +8,37 @@
       </div>
       <b-button class="mt-3" variant="outline-warning" block @click="updateGrade()">Zaktualizuj !</b-button>
   </b-modal>
+  <b-modal ref="integrations" hide-footer title="Integracje">
+      <div class="d-block text-center">
+       <div>
+        <h6>Skorzystaj z BOTA który powiadamia cię w każdej chwili !</h6>
+        <p><a href="https://m.me/311708832870884">Messenger MultiNotify BOT</a></p>
+        <p>1.rejestracja</p>
+        <p>2.{klasa}</p>
+        <p>Gotowe !</p>
+        <p>w przypadku chęci wyrejestrowania należy wpisać 'wyrejestruj'</p>
+         <h6>powiadomienia możesz otrzymywać także na email</h6>
+       </div>
+      </div>
+  </b-modal>
+  <b-modal ref="emails" hide-footer title="Adresy e-mail">
+      <div class="d-block text-center">
+       <div>
+        <h6>Powiadomienia email !</h6>
+        <span>
+        <p v-for="mail in grade.mails">{{mail.name}} || {{mail.email}} || <a href="#delete" @click="deleteMail(mail)">x</a></p>
+        </span>
+        <b-button class="mt-3" variant="outline-success" block @click="()=>{ $refs.createMail.show() }">Dodaj E-mail !</b-button>
+       </div>
+      </div>
+  </b-modal>
+  <b-modal ref="createMail" hide-footer title="Tworzenie adresu E-mail">
+       <div>
+        <input type="text" class="form-control" placeholder="Nazwa" v-model="mail.name">
+        <input type="email" class="form-control mt-1" placeholder="E-mail" v-model="mail.email">
+       </div>
+      <b-button class="mt-3" variant="outline-success" block @click="createMail()">Utwórz !</b-button>
+  </b-modal>
     <h1>Klasa {{this.grade.name}} !</h1>
     <p>Witaj {{ $store.state.user.full_name }} !</p>
         <div class='row'>
@@ -20,8 +51,11 @@
      <div class='grade' @click="createNotification()">
    Dodaj powiadomienie
     </div>
-     <div class='grade'>
+     <div class='grade' @click="()=>{ $refs.integrations.show() }">
    Integracje
+    </div>
+    <div class='grade' @click="()=>{ $refs.emails.show() }">
+   Adresy E-mail
     </div>
     <div class='grade delete' @click="deleteGrade()">
     Skasuj
@@ -55,7 +89,11 @@ export default {
   name: 'Grade',
   data () {
     return {
-      grade:{}
+      grade:{},
+      mail:{
+        name:"",
+        email:""
+      }
     }
   },
   created(){
@@ -94,6 +132,24 @@ export default {
            });
           this.$store.dispatch('grades');
           this.$refs.updateGrade.hide();
+      });
+    },
+    deleteMail(mail){
+        axios.delete('auth/mails/'+mail.id).then((response)=>{
+           axios.get('auth/grades/'+this.$route.params.grade).then((response)=>{
+            this.grade = response.data.data;
+           });
+        });
+    },
+    createMail(){
+      axios.post('auth/mails',{name:this.mail.name,email:this.mail.email,grade_id:this.grade.id}).then((response)=>{
+        this.mail.name = "";
+        this.mail.email = "";
+         axios.get('auth/grades/'+this.$route.params.grade).then((response)=>{
+            this.grade = response.data.data;
+         });
+        alert(response.data.message);
+        this.$refs.createMail.hide();
       });
     }
   }

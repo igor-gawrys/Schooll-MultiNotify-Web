@@ -5,7 +5,7 @@
       <li>
         <a
           href="/login"
-          target="_blank"
+          @click="()=>{ $router.push({name:'Dashboard',params:{}}) }"
         >
           Zaloguj się
         </a>
