@@ -8,15 +8,7 @@
 export default {
   name: 'App',
   async mounted(){
-    const loader = this.$loading.show({
-        // Optional parameters
-        container: this.fullPage ? null : this.$refs.formContainer,
-        canCancel: false,
-        height:128,
-        width:128,
-        color:"#08b274",
-        loader:"dots"
-    });
+    const loader = this.$loading.show();
     await this.$store.dispatch('me');
     await this.$store.dispatch('grades');
     loader.hide();

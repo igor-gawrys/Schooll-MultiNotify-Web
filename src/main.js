@@ -16,7 +16,12 @@ if(localStorage.getItem("access_token",null) !=null){
   axios.defaults.headers.common['Authorization'] = localStorage.getItem('access_token');
 }
 Vue.use(BootstrapVue)
-Vue.use(Loading)
+Vue.use(Loading,{
+  height:128,
+  width:128,
+  color:"#08b274",
+  loader:"dots"
+},{  })
 Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
@@ -25,20 +30,5 @@ new Vue({
   router,
   components: { App },
   template: '<App/>'
-})
-Vue.mixin({
-  data () {
-    return {
-      loader:{
-        // Optional parameters
-        container: this.fullPage ? null : this.$refs.formContainer,
-        canCancel: false,
-        height:128,
-        width:128,
-        color:"#08b274",
-        loader:"dots"
-      }
-    }
-  }
 })
 

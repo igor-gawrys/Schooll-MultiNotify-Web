@@ -51,7 +51,7 @@ export default {
        this.$store.dispatch('logout');
     },
     Delete(){
-        const loader = this.$loading.show(this.loader);
+        const loader = this.$loading.show();
         axios.delete("auth/notifications/"+this.notification.id).then((response)=>{
                alert(response.data.message);
                loader.hide();

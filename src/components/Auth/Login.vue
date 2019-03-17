@@ -29,7 +29,7 @@ export default {
   },
   methods:{
     async useID(){
-        const loader = this.$loading.show(this.loader);
+        const loader = this.$loading.show();
         await this.$store.dispatch('login',{email:this.email,password:this.password});
         loader.hide();
     }

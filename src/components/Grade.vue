@@ -97,7 +97,7 @@ export default {
     }
   },
   created(){
-    const loader = this.$loading.show(this.loader);
+    const loader = this.$loading.show();
      axios.get('auth/grades/'+this.$route.params.grade).then((response)=>{
         this.grade = response.data.data;
         loader.hide();
@@ -108,7 +108,7 @@ export default {
        this.$store.dispatch('logout');
     },
     deleteGrade(){
-      const loader = this.$loading.show(this.loader);
+      const loader = this.$loading.show();
       if(confirm("Czy jesteś pewien że chcesz usunąć ?")){
        axios.delete('auth/grades/'+this.grade.id).then((response)=>{
          this.$store.dispatch('grades');
@@ -118,7 +118,7 @@ export default {
       }
     },
     createNotification(){
-        const loader = this.$loading.show(this.loader);
+        const loader = this.$loading.show();
         let content = prompt("Wpisz treść powiadomienia !");
         if(content !=""){
          axios.post('auth/notifications',{content:content,grade_id:this.grade.id}).then((response)=>{
@@ -131,7 +131,7 @@ export default {
         }
     },
     updateGrade(){
-      const loader = this.$loading.show(this.loader);
+      const loader = this.$loading.show();
       axios.patch('auth/grades/'+this.grade.id,{name:this.grade.name,color:"#fffff"}).then((response)=>{
           this.grade.name = "";
            axios.get('auth/grades/'+this.$route.params.grade).then((response)=>{

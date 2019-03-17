@@ -53,7 +53,7 @@ export default {
        this.$store.dispatch('logout');
     },
     createGrade(){
-      const loader = this.$loading.show(this.loader);
+      const loader = this.$loading.show();
       axios.post('auth/grades',{name:this.grade.name,color:"#fffff"}).then((response)=>{
           this.grade.name = "";
           this.$store.dispatch('grades');
