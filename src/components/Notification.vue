@@ -38,7 +38,7 @@ export default {
   name: 'Notification',
   data () {
     return {
-      notification:{}
+      notification: { }
     }
   },
   created(){
@@ -51,8 +51,10 @@ export default {
        this.$store.dispatch('logout');
     },
     Delete(){
+        const loader = this.$loading.show(this.loader);
         axios.delete("auth/notifications/"+this.notification.id).then((response)=>{
                alert(response.data.message);
+               loader.hide();
                this.$router.back();
         });
     }

@@ -53,10 +53,12 @@ export default {
        this.$store.dispatch('logout');
     },
     createGrade(){
+      const loader = this.$loading.show(this.loader);
       axios.post('auth/grades',{name:this.grade.name,color:"#fffff"}).then((response)=>{
           this.grade.name = "";
           this.$store.dispatch('grades');
           this.$refs.createGrade.hide();
+          loader.hide();
       });
     }
   }

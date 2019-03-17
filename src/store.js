@@ -1,8 +1,7 @@
 import router from './router'
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Axios from 'axios';
-
+import Axios from 'axios'
 Vue.use(Vuex);
 const state = {
    user:{},

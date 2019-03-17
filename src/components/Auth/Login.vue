@@ -28,8 +28,10 @@ export default {
       }
   },
   methods:{
-    useID(){
-        this.$store.dispatch('login',{email:this.email,password:this.password});
+    async useID(){
+        const loader = this.$loading.show(this.loader);
+        await this.$store.dispatch('login',{email:this.email,password:this.password});
+        loader.hide();
     }
   }
 }
