@@ -11,7 +11,7 @@ import App from './App'
 import store from './store'
 import router from './router'
 window.axios = axios;
-axios.defaults.baseURL = "http://localhost:8080/api";
+axios.defaults.baseURL = "https://api.school.multinotify.pl/api";
 if(localStorage.getItem("access_token",null) !=null){
   axios.defaults.headers.common['Authorization'] = localStorage.getItem('access_token');
 }

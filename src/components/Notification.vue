@@ -42,8 +42,10 @@ export default {
     }
   },
   created(){
+     const loader = this.$loading.show();
      axios.get('auth/notifications/'+this.$route.params.notification).then((response)=>{
         this.notification = response.data.data;
+        loader.hide();
      });
   },
   methods:{
